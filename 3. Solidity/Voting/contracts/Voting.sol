@@ -47,7 +47,10 @@ contract Voting is Ownable {
 
     // @dev Revert if called by a whitelisted voter account
     modifier onlyVoter() {
-        require(voters[msg.sender].isRegistered == true, "Voter must be whitelisted");
+        require(
+            voters[msg.sender].isRegistered == true,
+            "Voter must be whitelisted"
+        );
         _;
     }
 
@@ -61,19 +64,29 @@ contract Voting is Ownable {
     event VoterRegistered(address voterAddress);
 
     // @dev Event when the workflow state has changed
-    event WorkflowStatusChange(WorkflowStatus previousStatus, WorkflowStatus newStatus);
+    event WorkflowStatusChange(
+        WorkflowStatus previousStatus,
+        WorkflowStatus newStatus
+    );
 
     // @dev Event when a new proposal has been submitted
-    event ProposalRegistered(uint proposalId);
+    event ProposalRegistered(uint256 proposalId);
 
     // @dev Event when a voter has voted
-    event Voted(address voter, uint proposalId);
+    event Voted(address voter, uint256 proposalId);
 
     // @dev Add a voter to the whitelist
     // @emit VoterRegistered
-    function addVoter(address _address) external onlyOwner onlyStatus(WorkflowStatus.RegisteringVoters) {
+    function addVoter(address _address)
+        external
+        onlyOwner
+        onlyStatus(WorkflowStatus.RegisteringVoters)
+    {
         // Voter can be only added once
-        require(voters[_address].isRegistered != true, "Voter already whitelisted");
+        require(
+            voters[_address].isRegistered != true,
+            "Voter already whitelisted"
+        );
 
         voters[_address] = Voter(true, false, 0);
 
@@ -84,10 +97,13 @@ contract Voting is Ownable {
     // @emit WorkflowStatusChange
     function nextStatus() external onlyOwner {
         // Only change status if the whole process is not finished
-        require(workflowStatus != WorkflowStatus.VotesTallied, "Vote session has already ended");
+        require(
+            workflowStatus != WorkflowStatus.VotesTallied,
+            "Vote session has already ended"
+        );
 
         WorkflowStatus previousWorkflowStatus = workflowStatus;
-        workflowStatus = WorkflowStatus(uint(previousWorkflowStatus) + 1);
+        workflowStatus = WorkflowStatus(uint256(previousWorkflowStatus) + 1);
 
         emit WorkflowStatusChange(previousWorkflowStatus, workflowStatus);
     }
@@ -95,7 +111,11 @@ contract Voting is Ownable {
     // @dev Add a proposal
     // @fixme: may be a public function instead of external as description has to be in memory: to check with Cyril
     // @emit ProposalRegistered
-    function addProposal(string calldata description) external onlyStatus(WorkflowStatus.ProposalsRegistrationStarted) onlyVoter {
+    function addProposal(string calldata description)
+        external
+        onlyStatus(WorkflowStatus.ProposalsRegistrationStarted)
+        onlyVoter
+    {
         proposals.push(Proposal(description, 0));
 
         emit ProposalRegistered(proposals.length);
@@ -103,11 +123,18 @@ contract Voting is Ownable {
 
     // @dev Count a vote for a proposal
     // @emit Voted
-    function vote(uint256 _proposalId) external onlyStatus(WorkflowStatus.VotingSessionStarted) onlyVoter {
+    function vote(uint256 _proposalId)
+        external
+        onlyStatus(WorkflowStatus.VotingSessionStarted)
+        onlyVoter
+    {
         require(_proposalId <= proposals.length, "Not a valid proposal ID");
-        require(voters[msg.sender].hasVoted == false, "Voter has already voted");
+        require(
+            voters[msg.sender].hasVoted == false,
+            "Voter has already voted"
+        );
 
-        proposals[_proposalId].voteCount ++;
+        proposals[_proposalId].voteCount++;
         voters[msg.sender].hasVoted = true;
 
         emit Voted(msg.sender, _proposalId);
@@ -115,7 +142,11 @@ contract Voting is Ownable {
 
     // @dev count all votes
     // In case of equality the first proposal will be returned
-    function tallyVotes() external onlyOwner onlyStatus(WorkflowStatus.VotingSessionEnded) {
+    function tallyVotes()
+        external
+        onlyOwner
+        onlyStatus(WorkflowStatus.VotingSessionEnded)
+    {
         require(proposals.length > 0, "No votes during the session"); // @fixme: we may not need it
 
         uint256 maxVotes = 0;
@@ -127,16 +158,29 @@ contract Voting is Ownable {
 
         workflowStatus = WorkflowStatus.VotesTallied;
 
-        emit WorkflowStatusChange(WorkflowStatus.VotingSessionEnded, WorkflowStatus.VotesTallied);
+        emit WorkflowStatusChange(
+            WorkflowStatus.VotingSessionEnded,
+            WorkflowStatus.VotesTallied
+        );
     }
 
     // @dev Return the winning proposal
-    function getWinner() public view onlyStatus(WorkflowStatus.VotesTallied) returns(uint256) {
+    function getWinner()
+        public
+        view
+        onlyStatus(WorkflowStatus.VotesTallied)
+        returns (uint256)
+    {
         return winningProposalId;
     }
 
     // @dev Return the proposal description
-    function getWinningProposalDescription() public view onlyStatus(WorkflowStatus.VotesTallied) returns(string memory) {
+    function getWinningProposalDescription()
+        public
+        view
+        onlyStatus(WorkflowStatus.VotesTallied)
+        returns (string memory)
+    {
         return proposals[winningProposalId].description;
     }
 }
