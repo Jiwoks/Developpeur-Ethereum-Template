@@ -79,109 +79,111 @@ Quand il faut tester une struct retournée par une fonction, je préfère le tes
 ````
   Contract: Voting
     Test public variables initialization
-      ✓ winningProposalID is initialized to 0
+      ✓ winningProposalID is initialized to 0 (48ms)
       ✓ winningProposalID is initialized to RegisteringVoters (0)
     Getters
       Test getVoter function
-        ✓ Only a voter can get a voter (411ms)
-        ✓ Get a voter
+        ✓ Only a voter can get a voter (719ms)
+        ✓ Get a voter (52ms)
       Test getOneProposal function
         ✓ Only voter can get a proposal
         ✓ Get a proposal
     Test workflow statuses
       Test functions for status RegisteringVoters (0)
-        ✓ addVoter() function should work if called from RegisteringVoters status (54ms)
-        ✓ endProposalsRegistering() function should revert if called from RegisteringVoters status with error "Registering proposals havent started yet" (64ms)
-        ✓ addProposal() function should revert if called from RegisteringVoters status with error "Registering proposals havent started yet" (45ms)
-        ✓ startVotingSession() function should revert if called from RegisteringVoters status with error "Registering proposals phase is not finished"
-        ✓ endVotingSession() function should revert if called from RegisteringVoters status with error "Voting session havent started yet" (46ms)
-        ✓ setVote() function should revert if called from RegisteringVoters status with error "Voting session havent started yet" (42ms)
-        ✓ tallyVotes() function should revert if called from RegisteringVoters status with error "Current status is not voting session ended"
-        ✓ startProposalsRegistering() is only callable by owner (39ms)
-        ✓ startProposalsRegistering() emit WorkflowStatusChange
-        ✓ startProposalsRegistering() changes status value to 1
+        ✓ addVoter() function should work if called from RegisteringVoters status (106ms)
+        ✓ endProposalsRegistering() function should revert if called from RegisteringVoters status with error "Registering proposals havent started yet" (85ms)
+        ✓ addProposal() function should revert if called from RegisteringVoters status with error "Registering proposals havent started yet" (126ms)
+        ✓ startVotingSession() function should revert if called from RegisteringVoters status with error "Registering proposals phase is not finished" (85ms)
+        ✓ endVotingSession() function should revert if called from RegisteringVoters status with error "Voting session havent started yet" (65ms)
+        ✓ setVote() function should revert if called from RegisteringVoters status with error "Voting session havent started yet" (77ms)
+        ✓ tallyVotes() function should revert if called from RegisteringVoters status with error "Current status is not voting session ended" (65ms)
+        ✓ startProposalsRegistering() is only callable by owner (87ms)
+        ✓ startProposalsRegistering() emit WorkflowStatusChange (120ms)
+        ✓ startProposalsRegistering() changes status value to 1 (40ms)
       Test functions for status ProposalsRegistrationStarted (1)
-        ✓ addProposal() function should work if called from ProposalsRegistrationStarted status (50ms)
-        ✓ startProposalsRegistering() function should revert if called from ProposalsRegistrationStarted status with error "Registering proposals cant be started now" (41ms)
-        ✓ addVoter() function should revert if called from ProposalsRegistrationStarted status with error "Registering proposals cant be started now" (42ms)
-        ✓ startVotingSession() function should revert if called from ProposalsRegistrationStarted status with error "Registering proposals phase is not finished"
-        ✓ endVotingSession() function should revert if called from ProposalsRegistrationStarted status with error "Voting session havent started yet" (48ms)
-        ✓ setVote() function should revert if called from ProposalsRegistrationStarted status with error "Voting session havent started yet" (46ms)
-        ✓ tallyVotes() function should revert if called from ProposalsRegistrationStarted status with error "Current status is not voting session ended"
-        ✓ endProposalsRegistering() is only callable by owner
-        ✓ endProposalsRegistering() emit WorkflowStatusChange (47ms)
+        ✓ addProposal() function should work if called from ProposalsRegistrationStarted status (72ms)
+        ✓ startProposalsRegistering() function should revert if called from ProposalsRegistrationStarted status with error "Registering proposals cant be started now" (107ms)
+        ✓ addVoter() function should revert if called from ProposalsRegistrationStarted status with error "Registering proposals cant be started now" (88ms)
+        ✓ startVotingSession() function should revert if called from ProposalsRegistrationStarted status with error "Registering proposals phase is not finished" (74ms)
+        ✓ endVotingSession() function should revert if called from ProposalsRegistrationStarted status with error "Voting session havent started yet" (117ms)
+        ✓ setVote() function should revert if called from ProposalsRegistrationStarted status with error "Voting session havent started yet" (69ms)
+        ✓ tallyVotes() function should revert if called from ProposalsRegistrationStarted status with error "Current status is not voting session ended" (101ms)
+        ✓ endProposalsRegistering() is only callable by owner (139ms)
+        ✓ endProposalsRegistering() emit WorkflowStatusChange (76ms)
         ✓ endProposalsRegistering() changes status value to 2
       Test functions for status ProposalsRegistrationEnded (2)
-        ✓ startProposalsRegistering() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals cant be started now" (50ms)
-        ✓ addVoter() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals cant be started now" (50ms)
-        ✓ endProposalsRegistering() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals havent started yet" (48ms)
-        ✓ addProposal() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals havent started yet" (65ms)
-        ✓ endVotingSession() function should revert if called from ProposalsRegistrationEnded status with error "Voting session havent started yet" (41ms)
-        ✓ setVote() function should revert if called from ProposalsRegistrationEnded status with error "Voting session havent started yet" (57ms)
-        ✓ tallyVotes() function should revert if called from ProposalsRegistrationEnded status with error "Current status is not voting session ended" (100ms)
-        ✓ startVotingSession() is only callable by owner (92ms)
-        ✓ startVotingSession() emit WorkflowStatusChange (116ms)
+        ✓ startProposalsRegistering() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals cant be started now" (63ms)
+        ✓ addVoter() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals cant be started now" (121ms)
+        ✓ endProposalsRegistering() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals havent started yet" (90ms)
+        ✓ addProposal() function should revert if called from ProposalsRegistrationEnded status with error "Registering proposals havent started yet" (86ms)
+        ✓ endVotingSession() function should revert if called from ProposalsRegistrationEnded status with error "Voting session havent started yet" (77ms)
+        ✓ setVote() function should revert if called from ProposalsRegistrationEnded status with error "Voting session havent started yet" (72ms)
+        ✓ tallyVotes() function should revert if called from ProposalsRegistrationEnded status with error "Current status is not voting session ended" (79ms)
+        ✓ startVotingSession() is only callable by owner (57ms)
+        ✓ startVotingSession() emit WorkflowStatusChange (71ms)
         ✓ startVotingSession() changes status value to 3
       Test functions for status VotingSessionStarted (3)
-        ✓ setVote() function should work if called from VotingSessionStarted status (55ms)
-        ✓ startProposalsRegistering() function should revert if called from VotingSessionStarted status with error "Registering proposals cant be started now" (56ms)
-        ✓ addVoter() function should revert if called from VotingSessionStarted status with error "Registering proposals cant be started now" (85ms)
-        ✓ endProposalsRegistering() function should revert if called from VotingSessionStarted status with error "Registering proposals havent started yet" (59ms)
-        ✓ addProposal() function should revert if called from VotingSessionStarted status with error "Registering proposals havent started yet" (78ms)
-        ✓ startVotingSession() function should revert if called from VotingSessionStarted status with error "Registering proposals phase is not finished" (49ms)
-        ✓ tallyVotes() function should revert if called from VotingSessionStarted status with error "Current status is not voting session ended" (48ms)
+        ✓ setVote() function should work if called from VotingSessionStarted status (74ms)
+        ✓ startProposalsRegistering() function should revert if called from VotingSessionStarted status with error "Registering proposals cant be started now" (44ms)
+        ✓ addVoter() function should revert if called from VotingSessionStarted status with error "Registering proposals cant be started now" (45ms)
+        ✓ endProposalsRegistering() function should revert if called from VotingSessionStarted status with error "Registering proposals havent started yet" (50ms)
+        ✓ addProposal() function should revert if called from VotingSessionStarted status with error "Registering proposals havent started yet" (57ms)
+        ✓ startVotingSession() function should revert if called from VotingSessionStarted status with error "Registering proposals phase is not finished" (62ms)
+        ✓ tallyVotes() function should revert if called from VotingSessionStarted status with error "Current status is not voting session ended" (39ms)
         ✓ endVotingSession() is only callable by owner
-        ✓ endVotingSession() emit WorkflowStatusChange
+        ✓ endVotingSession() emit WorkflowStatusChange (54ms)
         ✓ endVotingSession() changes status value to 4
       Test functions for status VotingSessionEnded (4)
-        ✓ startProposalsRegistering() function should revert if called from VotingSessionEnded status with error "Registering proposals cant be started now"
-        ✓ addVoter() function should revert if called from VotingSessionEnded status with error "Registering proposals cant be started now"
-        ✓ endProposalsRegistering() function should revert if called from VotingSessionEnded status with error "Registering proposals havent started yet"
-        ✓ addProposal() function should revert if called from VotingSessionEnded status with error "Registering proposals havent started yet" (61ms)
-        ✓ startVotingSession() function should revert if called from VotingSessionEnded status with error "Registering proposals phase is not finished" (56ms)
-        ✓ endVotingSession() function should revert if called from VotingSessionEnded status with error "Voting session havent started yet" (39ms)
-        ✓ setVote() function should revert if called from VotingSessionEnded status with error "Voting session havent started yet" (40ms)
-        ✓ tallyVotes() is only callable by owner (49ms)
-        ✓ tallyVotes() emit WorkflowStatusChange (40ms)
+        ✓ startProposalsRegistering() function should revert if called from VotingSessionEnded status with error "Registering proposals cant be started now" (66ms)
+        ✓ addVoter() function should revert if called from VotingSessionEnded status with error "Registering proposals cant be started now" (75ms)
+        ✓ endProposalsRegistering() function should revert if called from VotingSessionEnded status with error "Registering proposals havent started yet" (81ms)
+        ✓ addProposal() function should revert if called from VotingSessionEnded status with error "Registering proposals havent started yet" (67ms)
+        ✓ startVotingSession() function should revert if called from VotingSessionEnded status with error "Registering proposals phase is not finished" (59ms)
+        ✓ endVotingSession() function should revert if called from VotingSessionEnded status with error "Voting session havent started yet" (78ms)
+        ✓ setVote() function should revert if called from VotingSessionEnded status with error "Voting session havent started yet" (74ms)
+        ✓ tallyVotes() is only callable by owner (51ms)
+        ✓ tallyVotes() emit WorkflowStatusChange (50ms)
         ✓ tallyVotes() changes status value to 5
       Test functions for status VotesTallied (5)
-        ✓ startProposalsRegistering() function should revert if called from VotesTallied status with error "Registering proposals cant be started now" (44ms)
-        ✓ addVoter() function should revert if called from VotesTallied status with error "Registering proposals cant be started now" (40ms)
-        ✓ endProposalsRegistering() function should revert if called from VotesTallied status with error "Registering proposals havent started yet" (62ms)
-        ✓ addProposal() function should revert if called from VotesTallied status with error "Registering proposals havent started yet" (68ms)
-        ✓ startVotingSession() function should revert if called from VotesTallied status with error "Registering proposals phase is not finished" (58ms)
-        ✓ endVotingSession() function should revert if called from VotesTallied status with error "Voting session havent started yet" (55ms)
-        ✓ setVote() function should revert if called from VotesTallied status with error "Voting session havent started yet" (65ms)
-        ✓ tallyVotes() function should revert if called from VotesTallied status with error "Current status is not voting session ended" (52ms)
+        ✓ startProposalsRegistering() function should revert if called from VotesTallied status with error "Registering proposals cant be started now" (77ms)
+        ✓ addVoter() function should revert if called from VotesTallied status with error "Registering proposals cant be started now" (89ms)
+        ✓ endProposalsRegistering() function should revert if called from VotesTallied status with error "Registering proposals havent started yet" (48ms)
+        ✓ addProposal() function should revert if called from VotesTallied status with error "Registering proposals havent started yet" (74ms)
+        ✓ startVotingSession() function should revert if called from VotesTallied status with error "Registering proposals phase is not finished" (59ms)
+        ✓ endVotingSession() function should revert if called from VotesTallied status with error "Voting session havent started yet" (51ms)
+        ✓ setVote() function should revert if called from VotesTallied status with error "Voting session havent started yet" (38ms)
+        ✓ tallyVotes() function should revert if called from VotesTallied status with error "Current status is not voting session ended"
     Test addVoter function
-      ✓ Only owner add voter (137ms)
-      ✓ Add a voter with correct values (114ms)
-      ✓ Can	 add a voter twice (74ms)
-      ✓ Emits the VoterRegistered event (85ms)
+      ✓ Only owner add voter (205ms)
+      ✓ Add a voter with correct values (125ms)
+      ✓ Can      add a voter twice (154ms)
+      ✓ Emits the VoterRegistered event (80ms)
     Test addProposal function
-      ✓ Only voter can add proposal (121ms)
-      ✓ Can	 add an empty proposal
-      ✓ Add a proposal with correct values (119ms)
-      ✓ Emits the ProposalRegistered event (118ms)
+      ✓ Only voter can add proposal (143ms)
+      ✓ Can      add an empty proposal (58ms)
+      ✓ Add a proposal with correct values (114ms)
+      ✓ Emits the ProposalRegistered event (103ms)
     Test setVote function
-      ✓ Only voter can vote (134ms)
-      ✓ Can	 vote for non existing proposal (42ms)
-      ✓ Add a vote with correct values (272ms)
-      ✓ Save vote to voter (182ms)
-      ✓ Emits the Voted event (99ms)
+      ✓ Only voter can vote (185ms)
+      ✓ Can      vote for non existing proposal (55ms)
+      ✓ Can      vote twice (137ms)
+      ✓ Add a vote with correct values (190ms)
+      ✓ Save vote to voter (180ms)
+      ✓ Emits the Voted event (142ms)
     Test tallyVotes function
-      ✓ Only owner can tally votes (121ms)
-      ✓ Set correct winning proposal ID (110ms)
-      
-  79 passing (12s)
+      ✓ Only owner can tally votes (145ms)
+      ✓ Set correct winning proposal ID (119ms)
+
+
+  80 passing (17s)
 
 -------------|----------|----------|----------|----------|----------------|
 File         |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 -------------|----------|----------|----------|----------|----------------|
- contracts/  |      100 |    96.43 |      100 |      100 |                |
-  Voting.sol |      100 |    96.43 |      100 |      100 |                |
+ contracts/  |      100 |      100 |      100 |      100 |                |
+  Voting.sol |      100 |      100 |      100 |      100 |                |
 -------------|----------|----------|----------|----------|----------------|
-All files    |      100 |    96.43 |      100 |      100 |                |
+All files    |      100 |      100 |      100 |      100 |                |
 -------------|----------|----------|----------|----------|----------------|
 
 ````

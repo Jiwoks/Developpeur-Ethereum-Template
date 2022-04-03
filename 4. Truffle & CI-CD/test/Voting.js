@@ -333,6 +333,11 @@ contract('Voting', (accounts) => {
             await expectRevert(votingInstance.setVote('3', {from: alice}), 'Proposal not found');
         });
 
+        it('Can\t vote twice', async () => {
+            await votingInstance.setVote('0', {from: alice});
+            await expectRevert(votingInstance.setVote('0', {from: alice}), 'You have already voted');
+        });
+
         it('Add a vote with correct values', async () => {
             await votingInstance.setVote(1, {from: alice});
             await votingInstance.setVote(1, {from: bob});
