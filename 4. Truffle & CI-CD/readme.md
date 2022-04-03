@@ -1,8 +1,9 @@
 # Tests Voting
 
 ## Installation
+`nvm use 14`  Utilisation de node version 14  
 `yarn install`  
-Truffle doit être installé en version 5.4.29 pour pouvoir lancer le coverage
+Installera truffle en 5.4.29 pour pouvoir lancer le coverage
 
 ## Lancer les tests
 Tests simples: `yarn test`  
