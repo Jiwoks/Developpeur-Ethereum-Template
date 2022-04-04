@@ -10,7 +10,7 @@ Tests simples: `yarn test`
 Avec coverage: `yarn coverage`
 
 ## Résumé
-79 tests  
+80 tests  
 100% coverage
 
 ## Tests
