@@ -153,12 +153,12 @@ contract('Voting', (accounts) => {
 
     describe('Test workflow statuses', async () => {
 
+        before(async () => {
+            votingInstance = await Voting.new();
+        });
+
         // We want to make tests for each WorkflowStatus status
         for (const status of statuses) {
-
-            before(async () => {
-                votingInstance = await Voting.new();
-            });
 
             describe('Test functions for status ' + status.name + ' (' + status.value + ')', async () => {
                 // Some non changing workflow functions can be called from this status
