@@ -35,9 +35,9 @@ function Settings() {
         }
 
         if (value) {
-            Cookies.set('no-' + type, '1')
-        } else {
             Cookies.remove('no-' + type);
+        } else {
+            Cookies.set('no-' + type, '1')
         }
 
     }
