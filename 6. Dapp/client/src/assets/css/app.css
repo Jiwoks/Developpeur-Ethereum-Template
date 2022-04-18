@@ -12,7 +12,7 @@ body {
 }
 
 body.animated, body.animated button {
-    animation-duration: 10ms;
+    animation-duration: 50ms;
     animation-name: textflicker;
     animation-iteration-count: infinite;
     animation-direction: alternate;
