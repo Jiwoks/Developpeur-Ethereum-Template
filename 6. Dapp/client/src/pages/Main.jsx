@@ -15,7 +15,7 @@ import NotConnected from "./NotConnected";
 import VotingSessionEnded from "./VotingSessionEnded";
 import VotesTallied from "./VotesTallied";
 import Writer from "../components/Writer";
-import Optimization from "../components/Optimization";
+import Settings from "../components/Settings";
 
 function Main() {
     const {isVoter, isOwner, connected} = walletStore(state => ({ isVoter: state.isVoter, isOwner: state.isOwner, connected: state.connected }));
@@ -30,7 +30,6 @@ function Main() {
                 </div>
                 <div className="side-right">
                     <Wallet />
-                    <Optimization />
                 </div>
 
             </div>
@@ -45,6 +44,9 @@ function Main() {
                         </div>
                         <div className="sidebar">
                             <UserStatus/>
+                        </div>
+                        <div className="sidebar">
+                            <Settings />
                         </div>
                     </div>
                 }

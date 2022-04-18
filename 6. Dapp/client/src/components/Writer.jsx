@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import contractStore from "../stores/contract";
+import appStore from "../stores/app";
 
 let intervalIdle;
 let intervalWriting
@@ -9,6 +10,9 @@ audio.loop = true;
 
 function Writer(props) {
     const [content, setContent] = useState(null);
+
+    const {sound} = appStore(state => ({ sound: state.sound }));
+
 
     useEffect(() => {
         if (props.data === '' || props.data === null) {
@@ -23,7 +27,9 @@ function Writer(props) {
         clearInterval(intervalWriting);
         clearInterval(intervalIdle);
         intervalWriting = window.setInterval(() => {
-            audio.play();
+            if(sound) {
+                audio.play();
+            }
             setContent(props.data.substr(0, index) + pointer);
 
             if (index === props.data.length) {
