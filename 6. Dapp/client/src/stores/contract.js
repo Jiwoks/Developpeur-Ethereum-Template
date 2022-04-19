@@ -9,7 +9,15 @@ const store = create(set => ({
     address: null,
     workflowStatus: null,
     votingSessionId: null,
+    voters: [],
     log: null,
+    addVoters: (voters) => set({ voters }),
+    addVoter: (voter) => set(state => {
+        const newVoters = [...state.voters];
+        newVoters.push(voter);
+        return {voters: newVoters}
+    }),
+    resetContract: () => set({ voters: [] }),
 }));
 
 export default store;

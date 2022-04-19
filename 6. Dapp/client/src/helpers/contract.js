@@ -38,6 +38,7 @@ async function loadContract(web3Provider) {
         if (event.returnValues.newStatus === '0') {
             // The voting session has been reset
             walletStore.getState().resetVote();
+            contractStore.getState().resetContract();
         }
     });
 
@@ -48,6 +49,21 @@ async function loadContract(web3Provider) {
     subscribeEvent('VoterRegistered', (event) => {
         if (Web3.utils.toChecksumAddress(event.returnValues.voterAddress) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             walletStore.setState({ isVoter: true });
+        }
+
+        contractStore.getState().addVoter({
+            address: event.returnValues.voterAddress
+        });
+    });
+
+    subscribeEvent('ProposalRegistered', async (event) => {
+        if (Web3.utils.toChecksumAddress(event.returnValues.voter) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
+            const proposal = await getProposal(event.returnValues.proposalId);
+
+            walletStore.getState().addProposal({
+                proposalId: event.returnValues.proposalId,
+                description: proposal.description,
+            });
         }
     });
 
@@ -216,13 +232,51 @@ function getWorkflowStatusName(workflowStatus) {
     return status;
 }
 
-async function getProposals() {
-    const proposals = await contractInstance.getPastEvents('ProposalRegistered', {
+/**
+ * Retrieve all voters for the current session
+ *
+ * @return {Promise<*[]>}
+ */
+async function getVoters() {
+    const voterEvents = await contractInstance.getPastEvents('VoterRegistered', {
         fromBlock: 0,
         toBlock: 'latest',
         filter: {
-            votingSessionId:  contractStore.getState().votingSessionId
-        }
+            votingSessionId: contractStore.getState().votingSessionId
+        },
+    });
+
+    const voters = [];
+
+    for (const voter of voterEvents) {
+        voters.push({
+            address: voter.returnValues.voterAddress,
+        });
+    }
+
+    return voters;
+}
+
+/**
+ * Retrieve all proposals for the current session
+ * Can be filtered an address
+ *
+ * @param addressFrom
+ * @return {Promise<*[]>}
+ */
+async function getProposals(addressFrom = null) {
+    const filter = {
+        votingSessionId:  contractStore.getState().votingSessionId
+    };
+
+    if (addressFrom) {
+        filter.address = addressFrom;
+    }
+
+    const proposals = await contractInstance.getPastEvents('ProposalRegistered', {
+        fromBlock: 0,
+        toBlock: 'latest',
+        filter,
     });
 
     const proposalsArray = [];
@@ -271,4 +325,18 @@ function triggerEvent(event) {
     }
 }
 
-export {loadContract, getWorkflowStatus, getPermissions, setVoter, vote, getWorkflowStatusName, nextStatus, addProposal, getProposals, getWinner, resetStatus, subscribeEvent};
+export {
+    loadContract,
+    getWorkflowStatus,
+    getPermissions,
+    getVoters,
+    setVoter,
+    vote,
+    getWorkflowStatusName,
+    nextStatus,
+    addProposal,
+    getProposals,
+    getWinner,
+    resetStatus,
+    subscribeEvent
+};
