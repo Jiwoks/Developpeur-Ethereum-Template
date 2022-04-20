@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.7441a32e.chunk.css",
-    "main.js": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.067338e5.chunk.js",
-    "main.js.map": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.067338e5.chunk.js.map",
+    "main.css": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.d687935c.chunk.css",
+    "main.js": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.dee2c3ce.chunk.js",
+    "main.js.map": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.dee2c3ce.chunk.js.map",
     "runtime-main.js": "/Jiwoks/Developpeur-Ethereum-Template/static/js/runtime-main.3ae60fc9.js",
     "runtime-main.js.map": "/Jiwoks/Developpeur-Ethereum-Template/static/js/runtime-main.3ae60fc9.js.map",
     "static/js/2.7e2f5509.chunk.js": "/Jiwoks/Developpeur-Ethereum-Template/static/js/2.7e2f5509.chunk.js",
     "static/js/2.7e2f5509.chunk.js.map": "/Jiwoks/Developpeur-Ethereum-Template/static/js/2.7e2f5509.chunk.js.map",
     "index.html": "/Jiwoks/Developpeur-Ethereum-Template/index.html",
-    "precache-manifest.ebb0a54a8960100881678bdc52fc9ad1.js": "/Jiwoks/Developpeur-Ethereum-Template/precache-manifest.ebb0a54a8960100881678bdc52fc9ad1.js",
+    "precache-manifest.f47a2b02ffd25dc7450321f6d7a19ef4.js": "/Jiwoks/Developpeur-Ethereum-Template/precache-manifest.f47a2b02ffd25dc7450321f6d7a19ef4.js",
     "service-worker.js": "/Jiwoks/Developpeur-Ethereum-Template/service-worker.js",
-    "static/css/main.7441a32e.chunk.css.map": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.7441a32e.chunk.css.map"
+    "static/css/main.d687935c.chunk.css.map": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.d687935c.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.3ae60fc9.js",
     "static/js/2.7e2f5509.chunk.js",
-    "static/css/main.7441a32e.chunk.css",
-    "static/js/main.067338e5.chunk.js"
+    "static/css/main.d687935c.chunk.css",
+    "static/js/main.dee2c3ce.chunk.js"
   ]
 }

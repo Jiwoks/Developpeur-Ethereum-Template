@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ae6bc0e602f89e7a70dcd7b384ce979b",
+    "revision": "71a6b4e9cdab509a3b594d213a84f8e6",
     "url": "/Jiwoks/Developpeur-Ethereum-Template/index.html"
   },
   {
-    "revision": "927f00f5485b0391c887",
-    "url": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.7441a32e.chunk.css"
+    "revision": "893c766b0001864d72ee",
+    "url": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.d687935c.chunk.css"
   },
   {
     "revision": "d18353c5dbca95542b6e",
     "url": "/Jiwoks/Developpeur-Ethereum-Template/static/js/2.7e2f5509.chunk.js"
   },
   {
-    "revision": "927f00f5485b0391c887",
-    "url": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.067338e5.chunk.js"
+    "revision": "893c766b0001864d72ee",
+    "url": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.dee2c3ce.chunk.js"
   },
   {
     "revision": "ffcc94ab512772183640",

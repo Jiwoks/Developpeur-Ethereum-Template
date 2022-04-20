@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Jiwoks/Developpeur-Ethereum-Template/precache-manifest.ebb0a54a8960100881678bdc52fc9ad1.js"
+  "/Jiwoks/Developpeur-Ethereum-Template/precache-manifest.f47a2b02ffd25dc7450321f6d7a19ef4.js"
 );
 
 self.addEventListener('message', (event) => {
