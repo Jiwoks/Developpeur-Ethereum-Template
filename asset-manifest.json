@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.d687935c.chunk.css",
-    "main.js": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.dee2c3ce.chunk.js",
-    "main.js.map": "/Jiwoks/Developpeur-Ethereum-Template/static/js/main.dee2c3ce.chunk.js.map",
-    "runtime-main.js": "/Jiwoks/Developpeur-Ethereum-Template/static/js/runtime-main.3ae60fc9.js",
-    "runtime-main.js.map": "/Jiwoks/Developpeur-Ethereum-Template/static/js/runtime-main.3ae60fc9.js.map",
-    "static/js/2.7e2f5509.chunk.js": "/Jiwoks/Developpeur-Ethereum-Template/static/js/2.7e2f5509.chunk.js",
-    "static/js/2.7e2f5509.chunk.js.map": "/Jiwoks/Developpeur-Ethereum-Template/static/js/2.7e2f5509.chunk.js.map",
-    "index.html": "/Jiwoks/Developpeur-Ethereum-Template/index.html",
-    "precache-manifest.f47a2b02ffd25dc7450321f6d7a19ef4.js": "/Jiwoks/Developpeur-Ethereum-Template/precache-manifest.f47a2b02ffd25dc7450321f6d7a19ef4.js",
-    "service-worker.js": "/Jiwoks/Developpeur-Ethereum-Template/service-worker.js",
-    "static/css/main.d687935c.chunk.css.map": "/Jiwoks/Developpeur-Ethereum-Template/static/css/main.d687935c.chunk.css.map"
+    "main.css": "/Developpeur-Ethereum-Template/static/css/main.d687935c.chunk.css",
+    "main.js": "/Developpeur-Ethereum-Template/static/js/main.569d30ba.chunk.js",
+    "main.js.map": "/Developpeur-Ethereum-Template/static/js/main.569d30ba.chunk.js.map",
+    "runtime-main.js": "/Developpeur-Ethereum-Template/static/js/runtime-main.01884f62.js",
+    "runtime-main.js.map": "/Developpeur-Ethereum-Template/static/js/runtime-main.01884f62.js.map",
+    "static/js/2.b5a24ab6.chunk.js": "/Developpeur-Ethereum-Template/static/js/2.b5a24ab6.chunk.js",
+    "static/js/2.b5a24ab6.chunk.js.map": "/Developpeur-Ethereum-Template/static/js/2.b5a24ab6.chunk.js.map",
+    "index.html": "/Developpeur-Ethereum-Template/index.html",
+    "precache-manifest.a00b3d915b106f8361c49fcf8051a864.js": "/Developpeur-Ethereum-Template/precache-manifest.a00b3d915b106f8361c49fcf8051a864.js",
+    "service-worker.js": "/Developpeur-Ethereum-Template/service-worker.js",
+    "static/css/main.d687935c.chunk.css.map": "/Developpeur-Ethereum-Template/static/css/main.d687935c.chunk.css.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.3ae60fc9.js",
-    "static/js/2.7e2f5509.chunk.js",
+    "static/js/runtime-main.01884f62.js",
+    "static/js/2.b5a24ab6.chunk.js",
     "static/css/main.d687935c.chunk.css",
-    "static/js/main.dee2c3ce.chunk.js"
+    "static/js/main.569d30ba.chunk.js"
   ]
 }
