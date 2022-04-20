@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {addProposal, getProposals, getWinner, vote} from "../helpers/contract";
+import {getWinner} from "../helpers/contract";
+import contractStore from "../stores/contract";
 
 function VotesTallied() {
     const [winningProposal, setWinningProposal] = useState(null);
+    const {votingSessionId} = contractStore(state => ({ready: state.ready, votingSessionId: state.votingSessionId}));
 
     useEffect(() => {
         (async () => {
@@ -16,8 +18,11 @@ function VotesTallied() {
 
     return (
         <>
-            ID: {winningProposal.proposalId}<br/>
-            Description {winningProposal.description}
+            <h2>Winning proposal for vote session {votingSessionId}</h2>
+            <p>
+                Proposal #{winningProposal.proposalId} win with {winningProposal.voteCount} vote(s) :
+            </p>
+            <p><i>{winningProposal.description}</i></p>
         </>
     )
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import contractStore from "../stores/contract";
-import {getWorkflowStatusName} from "../helpers/contract";
 
 function VotingSessionId(props) {
 

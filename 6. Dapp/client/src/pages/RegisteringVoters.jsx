@@ -35,7 +35,7 @@ function RegisteringVoters() {
 
     return (
         <>
-            Add a voter : <br/>
+            <h2>Add a voter</h2>
             <input className="input-address" value={getInput} onChange={handleInputChange} />
             <button disabled={getDisabled} onClick={handleAddVoter}>Add voter</button>
 

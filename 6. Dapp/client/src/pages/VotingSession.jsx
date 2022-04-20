@@ -18,28 +18,32 @@ function VotingSession() {
     }
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Proposition</th>
-                    <th>Vote</th>
-                </tr>
-            </thead>
-            <tbody>
-            {proposals.map((proposal) =>
-                <tr key={proposal.id}>
-                    <td><span className="proposal-id">{proposal.id}</span></td>
-                    <td>{proposal.description}</td>
-                    <td>
-                        {(hasVoted && votedProposalId === proposal.id) && '[x]'}
-                        {(hasVoted && votedProposalId !== proposal.id) && '[ ]'}
-                        {!hasVoted && <button onClick={() => handleClick(proposal.id)}>Vote</button>}
-                    </td>
-                </tr>
-            )}
-            </tbody>
-        </table>
+        <>
+            <h2>Proposals available for vote</h2>
+            {<p>Your vote has been saved</p>}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Proposition</th>
+                        <th>Vote</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {proposals.map((proposal) =>
+                    <tr key={proposal.id}>
+                        <td><span className="proposal-id">{proposal.id}</span></td>
+                        <td>{proposal.description}</td>
+                        <td>
+                            {(hasVoted && votedProposalId === proposal.id) && '[x]'}
+                            {(hasVoted && votedProposalId !== proposal.id) && '[ ]'}
+                            {!hasVoted && <button onClick={() => handleClick(proposal.id)}>Vote</button>}
+                        </td>
+                    </tr>
+                )}
+                </tbody>
+            </table>
+        </>
     )
 }
 

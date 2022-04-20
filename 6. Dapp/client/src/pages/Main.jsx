@@ -19,7 +19,32 @@ import Settings from "../components/Settings";
 
 function Main() {
     const {isVoter, isOwner, connected} = walletStore(state => ({ isVoter: state.isVoter, isOwner: state.isOwner, connected: state.connected }));
-    const {workflowStatus, address, log} = contractStore(state => ({ workflowStatus: state.workflowStatus, address: state.address, log: state.log}));
+    const {noContractSet, workflowStatus, address, log} = contractStore(state => ({ noContractSet: state.noContractSet, workflowStatus: state.workflowStatus, address: state.address, log: state.log}));
+
+    // We are on the wrong network, or contract has not been published yet
+    if (noContractSet) {
+        return (
+            <>
+                <div id="main">
+                    No contract set
+                </div>
+            </>
+        );
+    }
+
+    let displayWorkflowStatus = false, displayNextStatus = false, displayResetStatus = false, displayPermissions = false, allowedAccess = false;
+
+    if (isOwner || isVoter) {
+        displayWorkflowStatus = isOwner || isVoter;
+        allowedAccess = true;
+    }
+
+    if (isOwner && workflowStatus !== '5') {
+        displayNextStatus = true;
+    }
+    if (isOwner && workflowStatus === '5') {
+        displayResetStatus = true;
+    }
 
     return (
         <>
@@ -35,13 +60,15 @@ function Main() {
             </div>
 
             <div id="main">
-                {connected &&
+                {connected && allowedAccess &&
                     <div id="sidebars">
-                        <div className="sidebar">
-                            <WorkflowStatus/>
-                            {(isOwner && workflowStatus !== '5') && <NextStatus/>}
-                            {(isOwner && workflowStatus === '5') && <ResetStatus/>}
-                        </div>
+                        {(displayWorkflowStatus || displayNextStatus || displayResetStatus) &&
+                            <div className="sidebar">
+                                {displayWorkflowStatus && <WorkflowStatus/>}
+                                {displayNextStatus && <NextStatus/>}
+                                {displayResetStatus && <ResetStatus/>}
+                            </div>
+                        }
                         <div className="sidebar">
                             <UserStatus/>
                         </div>
@@ -51,13 +78,22 @@ function Main() {
                     </div>
                 }
                 <div id="content">
-                    {!connected && <NotConnected /> }
-                    {(isOwner && workflowStatus === '0') && <RegisteringVoters /> }
-                    {(isVoter && workflowStatus === '1') && <RegisteringProposals /> }
-                    {(isVoter && workflowStatus === '2') && <ProposalsRegistrationEnded /> }
-                    {(isVoter && workflowStatus === '3') && <VotingSession /> }
-                    {(isVoter && workflowStatus === '4') && <VotingSessionEnded /> }
-                    {(isVoter && workflowStatus === '5') && <VotesTallied /> }
+                    {!allowedAccess &&
+                        <div className="top-margin">
+                            You are not allowed to access the application.
+                        </div>
+                    }
+                    {allowedAccess &&
+                        <div>
+                            {!connected && <NotConnected/>}
+                            {(isOwner && workflowStatus === '0') && <RegisteringVoters/>}
+                            {(isVoter && workflowStatus === '1') && <RegisteringProposals/>}
+                            {(isVoter && workflowStatus === '2') && <ProposalsRegistrationEnded/>}
+                            {(isVoter && workflowStatus === '3') && <VotingSession/>}
+                            {(isVoter && workflowStatus === '4') && <VotingSessionEnded/>}
+                            {(isVoter && workflowStatus === '5') && <VotesTallied/>}
+                        </div>
+                    }
                 </div>
 
             </div>

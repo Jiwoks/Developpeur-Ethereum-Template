@@ -11,6 +11,7 @@ const store = create(set => ({
     votingSessionId: null,
     voters: [],
     log: null,
+    noContractSet: null,
     addVoters: (voters) => set({ voters }),
     addVoter: (voter) => set(state => {
         const newVoters = [...state.voters];

@@ -14,6 +14,12 @@ let contractInstance;
 async function loadContract(web3Provider) {
     const networkId = await web3Provider.eth.net.getId();
     const deployedNetwork = votingContract.networks[networkId];
+
+    if (!deployedNetwork || !deployedNetwork.address) {
+        contractStore.setState({ noContractSet: true });
+        return;
+    }
+
     contractInstance = new web3Provider.eth.Contract(
         votingContract.abi,
         deployedNetwork && deployedNetwork.address,

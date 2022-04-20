@@ -71,7 +71,7 @@ contract Voting is Ownable {
 
     // @dev Event when a voter has been added
     // @param voterAddress The voter address
-    event VoterRegistered(address voterAddress, uint256 votingSessionId);
+    event VoterRegistered(address voterAddress, uint256 indexed votingSessionId);
 
     // @dev Event when the workflow state has changed
     // @param previousStatus Status we had previously
@@ -84,22 +84,23 @@ contract Voting is Ownable {
     );
 
     // @dev Event when a new proposal has been submitted
+    // @param voter Voter address
     // @param proposalId The proposal ID just registered
     // @param votingSessionId Identifier of the current voting session
-    event ProposalRegistered(uint256 proposalId, uint256 indexed votingSessionId);
+    event ProposalRegistered(address voter, uint256 proposalId, uint256 indexed votingSessionId);
 
     // @dev Event when a voter has voted
     // @param voter The voter address
     // @param proposalId The proposal the voter has voted for
     // @param votingSessionId Identifier of the current voting session
-    event Voted(address voter, uint256 proposalId, uint256 votingSessionId);
+    event Voted(address voter, uint256 proposalId, uint256 indexed votingSessionId);
 
     // @dev Event when a winning proposal is confirmed
     // @param proposalId The winning proposal ID
     // @param description The winning proposal description
     // @param voteCount The winning proposal number of votes
     // @param votingSessionId Identifier of the current voting session
-    event Winning(uint256 proposalId, string description, uint256 voteCount, uint256 votingSessionId);
+    event Winning(uint256 proposalId, string description, uint256 voteCount, uint256 indexed votingSessionId);
 
     // @notice Change the workflow status to the next one
     // @emit WorkflowStatusChange
@@ -149,7 +150,7 @@ contract Voting is Ownable {
     {
         proposals.push(Proposal(description, 0));
 
-        emit ProposalRegistered(proposals.length - 1, votingSessionId);
+        emit ProposalRegistered(msg.sender, proposals.length - 1, votingSessionId);
     }
 
     // @notice Count a vote for a proposal

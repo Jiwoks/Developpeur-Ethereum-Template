@@ -5,8 +5,9 @@ function VotingSessionEnded() {
 
     return (
         <>
-            Voting session has ended.<br/>
-            Thank you for your participation.<br/><br/>
+            <p>Voting session has ended.</p>
+            <p>Thank you for your participation.</p>
+            <p>Result will be available shortly.</p>
         </>
     )
 }

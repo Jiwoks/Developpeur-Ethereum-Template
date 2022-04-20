@@ -27,6 +27,7 @@ function RegisteringProposals() {
 
     return (
         <>
+            <h2>Registering proposals</h2>
             <input className="input-address" value={getInput} onChange={handleInputChange}/>
             <button disabled={getDisabled} onClick={handleAddProposal}>Add proposal</button>
 
@@ -52,7 +53,7 @@ function RegisteringProposals() {
                 </>
             }
 
-            {proposals.length === 0 && <div>You don't have any proposal registered yet</div>}
+            {proposals.length === 0 && <div class="top-margin">You don't have any proposal registered yet</div>}
         </>
     )
 }
