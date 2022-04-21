@@ -20,6 +20,7 @@
     "test": "truffle test",
     "hint": "solhint contracts/*.sol",
     "deploy": "truffle deploy",
+    "deploy-ropsten": "truffle deploy --network ropsten",
     "migrate": "truffle migrate"
   }
 }

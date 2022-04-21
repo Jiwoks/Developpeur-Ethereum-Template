@@ -6,6 +6,7 @@ import create from 'zustand';
 const store = create(set => ({
     sound: true,
     effects: true,
+    startError: null,
     setSound: (sound) => set({sound}),
     setEffects: (effects) => set({effects}),
 }));

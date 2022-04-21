@@ -4,6 +4,7 @@ import WorkflowStatus from "../components/WorkflowStatus";
 import UserStatus from "../components/UserStatus";
 import walletStore from "../stores/wallet";
 import contractStore from "../stores/contract";
+import appStore from "../stores/app";
 import RegisteringVoters from "./RegisteringVoters";
 import RegisteringProposals from "./RegisteringProposals";
 import VotingSession from "./VotingSession";
@@ -19,7 +20,19 @@ import Settings from "../components/Settings";
 
 function Main() {
     const {isVoter, isOwner, connected} = walletStore(state => ({ isVoter: state.isVoter, isOwner: state.isOwner, connected: state.connected }));
-    const {noContractSet, workflowStatus, address, log} = contractStore(state => ({ noContractSet: state.noContractSet, workflowStatus: state.workflowStatus, address: state.address, log: state.log}));
+    const {ready, noContractSet, workflowStatus, address, log} = contractStore(state => ({ ready: state.ready, noContractSet: state.noContractSet, workflowStatus: state.workflowStatus, address: state.address, log: state.log}));
+    const {startError} = appStore(state => ({startError: state.startError}));
+
+    // Not ready yet
+    if (!ready) {
+        return (
+            <>
+                <div id="main">
+                    <Writer data={startError !== null ? startError : "loading"} sound={false} animation={true} />
+                </div>
+            </>
+        );
+    }
 
     // We are on the wrong network, or contract has not been published yet
     if (noContractSet) {

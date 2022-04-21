@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types'
 import contractStore from "../stores/contract";
 import appStore from "../stores/app";
 
@@ -8,20 +9,37 @@ let lastProposal;
 const audio = new Audio('sound.mp3');
 audio.loop = true;
 
-function Writer(props) {
+function Writer({ data, soundProp = true, animationProp = true}) {
+    const props = {
+        sound: soundProp,
+        animation: animationProp,
+        data
+    }
+
     const [content, setContent] = useState(null);
+    const [sound, setSound] = useState(false);
+    const [animation, setAnimation] = useState(false);
+    const {storeSound} = appStore(state => ({ sound: state.sound }));
 
-    const {sound} = appStore(state => ({ sound: state.sound }));
-
+    useEffect(() => {
+        setSound(storeSound && props.sound);
+        setAnimation(props.animation);
+    }, [storeSound, props.sound, props.animation])
 
     useEffect(() => {
         if (props.data === '' || props.data === null) {
             return;
         }
 
+        const pointer = '▓';
+
+        if (!animation) {
+            setContent(props.data + pointer);
+            return;
+        }
+
         const intervalWritingTiming = 70;
         const intervalIdleTiming = 600;
-        const pointer = '▓';
         let index = 0;
 
         clearInterval(intervalWriting);
@@ -40,10 +58,10 @@ function Writer(props) {
                 window.clearInterval(intervalWriting);
                 let lastPointer = '';
                 intervalIdle = window.setInterval(() => {
-                    if (lastPointer === '') {
+                    if (lastPointer === ' ') {
                         lastPointer = pointer;
                     } else {
-                        lastPointer = '';
+                        lastPointer = ' ';
                     }
                     setContent(lastProposal + lastPointer);
                 }, intervalIdleTiming);
