@@ -1,5 +1,4 @@
 import React from 'react';
-import contractStore from "../stores/contract";
 import {resetStatus} from "../helpers/contract";
 
 function ResetStatus() {

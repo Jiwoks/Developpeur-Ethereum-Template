@@ -2,7 +2,7 @@ import React from 'react';
 import walletStore from '../stores/wallet';
 import {connect, disconnect} from "../helpers/wallet";
 
-function Wallet(props) {
+function Wallet() {
     // Load the data from store
     const { ready, connected, address } = walletStore(state => ({web3: state.web3, ready: state.ready, connected: state.connected, address: state.address}));
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import contractStore from "../stores/contract";
 
-function VotingSessionId(props) {
+function VotingSessionId() {
 
     const {ready, votingSessionId} = contractStore(state => ({ready: state.ready, votingSessionId: state.votingSessionId}));
 

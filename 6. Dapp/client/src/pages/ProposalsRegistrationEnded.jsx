@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {addProposal} from "../helpers/contract";
+import React from 'react';
 
 function ProposalsRegistrationEnded() {
 

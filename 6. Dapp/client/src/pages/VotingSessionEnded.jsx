@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import {addProposal, getProposals, vote} from "../helpers/contract";
+import React from 'react';
 
 function VotingSessionEnded() {
 
