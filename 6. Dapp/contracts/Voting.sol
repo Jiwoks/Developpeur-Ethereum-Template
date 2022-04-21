@@ -4,13 +4,13 @@ pragma solidity 0.8.13;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-// @title Voting
-// @author Damien B
-// @notice Voting system
-//         In case of equality on a proposal, the first proposal is returned
-//         In case not vote has been done during the voting session, the winning proposal getter will revert
+/// @title Voting
+/// @author Damien B
+/// @notice Voting system
+///         In case of equality on a proposal, the first proposal is returned
+///         In case not vote has been done during the voting session, the winning proposal getter will revert
 contract Voting is Ownable {
-    // @dev Represents a voter
+    /// @dev Represents a voter
     struct Voter {
         bool isRegistered;
         bool hasVoted;
@@ -18,13 +18,13 @@ contract Voting is Ownable {
         uint256 sessionId;
     }
 
-    // @dev Represents a proposal from a voter
+    /// @dev Represents a proposal from a voter
     struct Proposal {
         string description;
         uint256 voteCount;
     }
 
-    // @dev Status of the current voting session
+    /// @dev Status of the current voting session
     enum WorkflowStatus {
         RegisteringVoters,
         ProposalsRegistrationStarted,
@@ -34,26 +34,26 @@ contract Voting is Ownable {
         VotesTallied
     }
 
-    // @dev Voting session Id
-    //      As we can't delete mapping we'll keep track of voting through this session Id
+    /// @dev Voting session Id
+    ///      As we can't delete mapping we'll keep track of voting through this session Id
     uint256 public votingSessionId;
 
-    // @dev Whitelist of voters
+    /// @dev Whitelist of voters
     mapping(address => Voter) public voters;
 
-    // @dev Current status of the workflow
-    //      By default will be set 0 (RegisteringVoters)
-    //      Public visibility set to let anyone get the current state of the workflow
+    /// @dev Current status of the workflow
+    ///      By default will be set 0 (RegisteringVoters)
+    ///      Public visibility set to let anyone get the current state of the workflow
     WorkflowStatus public workflowStatus;
 
-    // @dev Proposals, list of proposals from voters
-    // @todo: We may add a getter to know the length of proposals for web3 usage
+    /// @dev Proposals, list of proposals from voters
+    //  @todo: We may add a getter to know the length of proposals for web3 usage
     Proposal[] public proposals;
 
-    // @dev We store the proposal which currently win
+    /// @dev We store the proposal which currently win
     uint256 private winningProposalId;
 
-    // @dev Revert if not called by a whitelisted voter account
+    /// @dev Revert if not called by a whitelisted voter account
     modifier onlyVoter() {
         require(
             voters[msg.sender].isRegistered == true && voters[msg.sender].sessionId == votingSessionId,
@@ -62,48 +62,48 @@ contract Voting is Ownable {
         _;
     }
 
-    // @dev Revert if called from the wrong voting session status
-    // @param _status The workflow status we want to allow at this time
+    /// @dev Revert if called from the wrong voting session status
+    /// @param _status The workflow status we want to allow at this time
     modifier onlyStatus(WorkflowStatus _status) {
         require(workflowStatus == _status, "Not allowed at this time");
         _;
     }
 
-    // @dev Event when a voter has been added
-    // @param voterAddress The voter address
+    /// @dev Event when a voter has been added
+    /// @param voterAddress The voter address
     event VoterRegistered(address voterAddress, uint256 indexed votingSessionId);
 
-    // @dev Event when the workflow state has changed
-    // @param previousStatus Status we had previously
-    // @param newStatus Status we have from now
-    // @param votingSessionId Identifier of the current voting session
+    /// @dev Event when the workflow state has changed
+    /// @param previousStatus Status we had previously
+    /// @param newStatus Status we have from now
+    /// @param votingSessionId Identifier of the current voting session
     event WorkflowStatusChange(
         WorkflowStatus previousStatus,
         WorkflowStatus newStatus,
         uint256 votingSessionId
     );
 
-    // @dev Event when a new proposal has been submitted
-    // @param voter Voter address
-    // @param proposalId The proposal ID just registered
-    // @param votingSessionId Identifier of the current voting session
+    /// @dev Event when a new proposal has been submitted
+    /// @param voter Voter address
+    /// @param proposalId The proposal ID just registered
+    /// @param votingSessionId Identifier of the current voting session
     event ProposalRegistered(address voter, uint256 proposalId, uint256 indexed votingSessionId);
 
-    // @dev Event when a voter has voted
-    // @param voter The voter address
-    // @param proposalId The proposal the voter has voted for
-    // @param votingSessionId Identifier of the current voting session
+    /// @dev Event when a voter has voted
+    /// @param voter The voter address
+    /// @param proposalId The proposal the voter has voted for
+    /// @param votingSessionId Identifier of the current voting session
     event Voted(address voter, uint256 proposalId, uint256 indexed votingSessionId);
 
-    // @dev Event when a winning proposal is confirmed
-    // @param proposalId The winning proposal ID
-    // @param description The winning proposal description
-    // @param voteCount The winning proposal number of votes
-    // @param votingSessionId Identifier of the current voting session
+    /// @dev Event when a winning proposal is confirmed
+    /// @param proposalId The winning proposal ID
+    /// @param description The winning proposal description
+    /// @param voteCount The winning proposal number of votes
+    /// @param votingSessionId Identifier of the current voting session
     event Winning(uint256 proposalId, string description, uint256 voteCount, uint256 indexed votingSessionId);
 
-    // @notice Change the workflow status to the next one
-    // @emit WorkflowStatusChange
+    /// @notice Change the workflow status to the next one
+    //  @emit WorkflowStatusChange
     function nextStatus() external onlyOwner {
         // Only change status if the whole process is not finished
         require(
@@ -122,9 +122,9 @@ contract Voting is Ownable {
         emit WorkflowStatusChange(previousWorkflowStatus, workflowStatus, votingSessionId);
     }
 
-    // @notice Add a voter to the whitelist
-    // @param _address Voter address to whitelist
-    // @emit VoterRegistered
+    /// @notice Add a voter to the whitelist
+    /// @param _address Voter address to whitelist
+    //  @emit VoterRegistered
     function addVoter(address _address)
         external
         onlyOwner
@@ -141,8 +141,8 @@ contract Voting is Ownable {
         emit VoterRegistered(_address, votingSessionId);
     }
 
-    // @notice Add a proposal
-    // @emit ProposalRegistered
+    /// @notice Add a proposal
+    //  @emit ProposalRegistered
     function addProposal(string calldata description)
         external
         onlyStatus(WorkflowStatus.ProposalsRegistrationStarted)
@@ -153,9 +153,9 @@ contract Voting is Ownable {
         emit ProposalRegistered(msg.sender, proposals.length - 1, votingSessionId);
     }
 
-    // @notice Count a vote for a proposal
-    // @param _proposalId The proposal ID the voter votes for
-    // @emit Voted
+    /// @notice Count a vote for a proposal
+    /// @param _proposalId The proposal ID the voter votes for
+    //  @emit Voted
     function vote(uint256 _proposalId)
         external
         onlyStatus(WorkflowStatus.VotingSessionStarted)
@@ -180,10 +180,10 @@ contract Voting is Ownable {
         emit Voted(msg.sender, _proposalId, votingSessionId);
     }
 
-    // @notice Return the winning proposal id and description
-    // @return uint256 The winning proposal ID
-    // @return string The winning proposal description
-    // @return uint256 Vote counts for this proposal
+    /// @notice Return the winning proposal id and description
+    /// @return proposalId uint256 The winning proposal ID
+    /// @return description string The winning proposal description
+    /// @return voteCount uint256 Vote counts for this proposal
     function getWinner()
         public
         view
@@ -195,9 +195,9 @@ contract Voting is Ownable {
         return (winningProposalId, proposals[winningProposalId].description, proposals[winningProposalId].voteCount);
     }
 
-    // @notice count all votes and set the winning proposal
-    // @dev this function is called internally from the nextStatus function
-    // @emit Winning
+    /// @notice count all votes and set the winning proposal
+    /// @dev this function is called internally from the nextStatus function
+    //  @emit Winning
     function _tallyVotes()
         private
         onlyOwner
@@ -215,8 +215,8 @@ contract Voting is Ownable {
         }
     }
 
-    // @notice Reset the contract to its original state
-    // @emit WorkflowStatusChange
+    /// @notice Reset the contract to its original state
+    //  @emit WorkflowStatusChange
     function reset()
         public
         onlyOwner
