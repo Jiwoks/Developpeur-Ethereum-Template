@@ -51,7 +51,7 @@ contract Voting is Ownable {
     Proposal[] public proposals;
 
     // @dev We store the proposal which currently win
-    uint256 winningProposalId;
+    uint256 private winningProposalId;
 
     // @dev Revert if not called by a whitelisted voter account
     modifier onlyVoter() {
