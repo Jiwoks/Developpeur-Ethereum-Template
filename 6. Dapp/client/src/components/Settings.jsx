@@ -22,7 +22,10 @@ function Settings() {
         setSound(soundEnabled);
     }, []);
 
-    const toggle = (type, value) => {
+    const toggle = (type, value, e) => {
+        if (e) {
+            e.preventDefault()
+        }
         if (type === 'effects') {
             if (value) {
                 document.getElementsByTagName('body')[0].classList.add('animated');
@@ -45,8 +48,8 @@ function Settings() {
     return (
         <div id="settings">
             <h3>Settings</h3>
-            <a onClick={() => toggle('effects', !effects)} className="setting-btn">Visual effect <span>{effects ? '[x]' : '[ ]'}</span></a>
-            <a onClick={() => toggle('sound', !sound)} className="setting-btn">Sound <span>{sound ? '[x]' : '[ ]'}</span></a>
+            <a href="#" onClick={(e) => toggle('effects', !effects, e)} className="setting-btn">Visual effect <span>{effects ? '[x]' : '[ ]'}</span></a>
+            <a href="#" onClick={(e) => toggle('sound', !sound, e)} className="setting-btn">Sound <span>{sound ? '[x]' : '[ ]'}</span></a>
         </div>
     );
 }
