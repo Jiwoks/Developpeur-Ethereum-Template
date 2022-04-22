@@ -29,32 +29,46 @@ async function loadContract(web3Provider) {
     const workflowStatus = await getWorkflowStatus();
     const votingSessionId = await getVotingSessionId();
 
-    contractInstance.events.allEvents(
-        {},
-        (err, event) => {
-            if (err) {
-                return console.warn(err);
-            }
-            triggerEvent(event)
+    contractInstance.events.WorkflowStatusChange((err, event) => {
+        if (err) {
+            return console.warn(err);
         }
-    );
-
-    subscribeEvent('WorkflowStatusChange', (event) => {
         contractStore.setState({ workflowStatus: event.returnValues.newStatus, votingSessionId: event.returnValues.votingSessionId });
-        if (event.returnValues.newStatus === '0') {
-            // The voting session has been reset
-            walletStore.getState().resetVote();
-            contractStore.getState().resetContract();
+        switch (event.returnValues.newStatus) {
+            case '0':
+                // The voting session has been reset
+                walletStore.getState().resetVote();
+                contractStore.getState().resetContract();
+                break;
+            case '1':
+                contractStore.getState().addLog('Proposal registration is started');
+                break;
+            case '2':
+                contractStore.getState().addLog('Proposal registration ended');
+                break;
+            case '3':
+                contractStore.getState().addLog('Voting session started');
+                break;
+            case '4':
+                contractStore.getState().addLog('Voting sessions ended');
+                break;
+            case '5':
+                contractStore.getState().addLog('Votes tallied');
+                break;
+
         }
     });
 
-    subscribeEvent('*', (event) => {
-        contractStore.setState({log: event.event });
-    });
-
-    subscribeEvent('VoterRegistered', (event) => {
+    contractInstance.events.VoterRegistered((err, event) => {
+        if (err) {
+            return console.warn(err);
+        }
         if (Web3.utils.toChecksumAddress(event.returnValues.voterAddress) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             walletStore.setState({ isVoter: true });
+            contractStore.getState().addLog('You have been registered as a voter');
+
+        } else if (walletStore.getState().isOwner) {
+            contractStore.getState().addLog('New voter added ' + event.returnValues.voterAddress);
         }
 
         contractStore.getState().addVoter({
@@ -62,20 +76,33 @@ async function loadContract(web3Provider) {
         });
     });
 
-    subscribeEvent('ProposalRegistered', async (event) => {
+    contractInstance.events.ProposalRegistered(async (err, event) => {
+        if (err) {
+            return console.warn(err);
+        }
         if (Web3.utils.toChecksumAddress(event.returnValues.voter) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             const proposal = await getProposal(event.returnValues.proposalId);
+
+            contractStore.getState().addLog('Your proposal has been registered #' + event.returnValues.proposalId);
 
             walletStore.getState().addProposal({
                 proposalId: event.returnValues.proposalId,
                 description: proposal.description,
             });
+        } else if(walletStore.getState().isOwner) {
+            contractStore.getState().addLog('A new proposal has been registered #' + event.returnValues.proposalId);
         }
     });
 
-    subscribeEvent('Voted', (event) => {
+    contractInstance.events.Voted(async (err, event) => {
+        if (err) {
+            return console.warn(err);
+        }
         if (Web3.utils.toChecksumAddress(event.returnValues.voter) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             walletStore.setState({ hasVoted: true, votedProposalId: event.returnValues.proposalId });
+            contractStore.getState().addLog('Your vote has been saved');
+        } else if (walletStore.getState().isOwner) {
+            contractStore.getState().addLog('A new vote happened from ' + event.returnValues.voter);
         }
     });
 
@@ -310,27 +337,6 @@ async function getWinner() {
     return {proposalId: winner.proposalId, description: winner.description, voteCount: winner.voteCount};
 }
 
-const subscriptions = {};
-function subscribeEvent(eventName, callback) {
-    if (subscriptions[eventName] === undefined) {
-        subscriptions[eventName] = [];
-    }
-    subscriptions[eventName].push(callback);
-}
-
-function triggerEvent(event) {
-    if (subscriptions[event.event] !== undefined) {
-        for (const evt of Object.values(subscriptions[event.event])) {
-            evt(event);
-        }
-    }
-    if (subscriptions['*'] !== undefined) {
-        for (const evt of Object.values(subscriptions['*'])) {
-            evt(event);
-        }
-    }
-}
-
 export {
     loadContract,
     getWorkflowStatus,
@@ -343,6 +349,5 @@ export {
     addProposal,
     getProposals,
     getWinner,
-    resetStatus,
-    subscribeEvent
+    resetStatus
 };
