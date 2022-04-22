@@ -53,7 +53,7 @@ function RegisteringProposals() {
                 </>
             }
 
-            {proposals.length === 0 && <div class="top-margin">You don't have any proposal registered yet</div>}
+            {proposals.length === 0 && <div className="top-margin">You don't have any proposal registered yet</div>}
         </>
     )
 }
