@@ -203,9 +203,8 @@ contract Voting is Ownable {
         onlyOwner
         onlyStatus(WorkflowStatus.VotingSessionEnded)
     {
-
         // Make sure we have at lease one vote
-        if (proposals[winningProposalId].voteCount != 0) {
+        if (proposals.length > 0 && proposals[winningProposalId].voteCount != 0) {
             emit Winning(
                 winningProposalId,
                 proposals[winningProposalId].description,
