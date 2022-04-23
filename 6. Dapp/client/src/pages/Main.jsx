@@ -28,7 +28,7 @@ function Main() {
         return (
             <>
                 <div id="main">
-                    <Writer data={startError !== null ? startError : "loading"} sound={false} animation={true} />
+                    <Writer data={startError !== null ? startError : "Please connect your wallet"} sound={false} animation={true} />
                 </div>
             </>
         );
