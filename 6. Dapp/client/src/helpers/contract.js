@@ -291,9 +291,8 @@ async function getProposals(addressFrom = null) {
     };
 
     if (addressFrom) {
-        filter.address = addressFrom;
+        filter.voter = addressFrom;
     }
-
     const proposals = await contractInstance.getPastEvents('ProposalRegistered', {
         fromBlock: 0,
         toBlock: 'latest',
