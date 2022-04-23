@@ -26,7 +26,7 @@ function Writer({ data, soundProp = true, animationProp = true}) {
     }, [storeSound, props.sound, props.animation])
 
     useEffect(() => {
-        if (props.data === '' || props.data === null) {
+        if (props.data === null) {
             return;
         }
 

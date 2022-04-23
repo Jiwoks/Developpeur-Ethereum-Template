@@ -19,7 +19,7 @@ const store = create(set => ({
         newVoters.push(voter);
         return {voters: newVoters}
     }),
-    resetContract: () => set({ voters: [] }),
+    resetContract: () => set({ voters: [], log: '' }),
 }));
 
 export default store;
