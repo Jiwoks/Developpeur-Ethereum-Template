@@ -139,6 +139,11 @@ button {
     background-color: #404040;
 }
 
+button:disabled {
+    color: #7f7f7f;
+    cursor: initial;
+}
+
 .btn-wallet:before {
     content: "";
     width: 15px;
