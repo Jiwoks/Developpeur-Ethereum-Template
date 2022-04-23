@@ -48,7 +48,7 @@ function Main() {
     let displayWorkflowStatus = false, displayNextStatus = false, displayResetStatus = false, displayPermissions = false, allowedAccess = false;
 
     if (isOwner || isVoter) {
-        displayWorkflowStatus = isOwner || isVoter;
+        displayWorkflowStatus = true;
         allowedAccess = true;
     }
 
@@ -73,7 +73,7 @@ function Main() {
             </div>
 
             <div id="main">
-                {connected && allowedAccess &&
+                {connected &&
                     <div id="sidebars">
                         {(displayWorkflowStatus || displayNextStatus || displayResetStatus) &&
                             <div className="sidebar">
@@ -82,9 +82,11 @@ function Main() {
                                 {displayResetStatus && <ResetStatus/>}
                             </div>
                         }
-                        <div className="sidebar">
-                            <UserStatus/>
-                        </div>
+                        {allowedAccess &&
+                            <div className="sidebar">
+                                <UserStatus/>
+                            </div>
+                        }
                         <div className="sidebar">
                             <Settings />
                         </div>
