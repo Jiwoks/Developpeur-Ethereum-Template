@@ -71,7 +71,7 @@ contract Voting is Ownable {
 
     /// @dev Event when a voter has been added
     /// @param voterAddress The voter address
-    event VoterRegistered(address voterAddress, uint256 indexed votingSessionId);
+    event VoterRegistered(address indexed voterAddress, uint256 indexed votingSessionId);
 
     /// @dev Event when the workflow state has changed
     /// @param previousStatus Status we had previously
@@ -87,7 +87,7 @@ contract Voting is Ownable {
     /// @param voter Voter address
     /// @param proposalId The proposal ID just registered
     /// @param votingSessionId Identifier of the current voting session
-    event ProposalRegistered(address voter, uint256 proposalId, uint256 indexed votingSessionId);
+    event ProposalRegistered(address indexed voter, uint256 proposalId, uint256 indexed votingSessionId);
 
     /// @dev Event when a voter has voted
     /// @param voter The voter address
