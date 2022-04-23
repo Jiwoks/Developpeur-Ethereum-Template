@@ -29,10 +29,7 @@ async function loadContract(web3Provider) {
     const workflowStatus = await getWorkflowStatus();
     const votingSessionId = await getVotingSessionId();
 
-    contractInstance.events.WorkflowStatusChange((err, event) => {
-        if (err) {
-            return console.warn(err);
-        }
+    contractInstance.events.WorkflowStatusChange().on('data', (event) => {
         contractStore.setState({ workflowStatus: event.returnValues.newStatus, votingSessionId: event.returnValues.votingSessionId });
         switch (event.returnValues.newStatus) {
             case '0':
@@ -59,10 +56,7 @@ async function loadContract(web3Provider) {
         }
     });
 
-    contractInstance.events.VoterRegistered((err, event) => {
-        if (err) {
-            return console.warn(err);
-        }
+    contractInstance.events.VoterRegistered().on('data', (event) => {
         if (Web3.utils.toChecksumAddress(event.returnValues.voterAddress) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             walletStore.setState({ isVoter: true });
             contractStore.getState().addLog('You have been registered as a voter');
@@ -76,10 +70,7 @@ async function loadContract(web3Provider) {
         });
     });
 
-    contractInstance.events.ProposalRegistered(async (err, event) => {
-        if (err) {
-            return console.warn(err);
-        }
+    contractInstance.events.ProposalRegistered().on('data', async (event) => {
         if (Web3.utils.toChecksumAddress(event.returnValues.voter) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             const proposal = await getProposal(event.returnValues.proposalId);
 
@@ -94,10 +85,7 @@ async function loadContract(web3Provider) {
         }
     });
 
-    contractInstance.events.Voted(async (err, event) => {
-        if (err) {
-            return console.warn(err);
-        }
+    contractInstance.events.Voted().on('data', (event) => {
         if (Web3.utils.toChecksumAddress(event.returnValues.voter) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             walletStore.setState({ hasVoted: true, votedProposalId: event.returnValues.proposalId });
             contractStore.getState().addLog('Your vote has been saved');
