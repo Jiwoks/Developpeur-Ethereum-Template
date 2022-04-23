@@ -18,7 +18,7 @@ function Writer({ data, soundProp = true, animationProp = true}) {
     const [content, setContent] = useState(null);
     const [sound, setSound] = useState(false);
     const [animation, setAnimation] = useState(false);
-    const storeSound = appStore(state => ({ sound: state.sound }));
+    const {sound: storeSound} = appStore(state => ({ sound: state.sound }));
 
     useEffect(() => {
         setSound(storeSound && props.sound);
