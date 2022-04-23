@@ -29,7 +29,21 @@ async function loadContract(web3Provider) {
     const workflowStatus = await getWorkflowStatus();
     const votingSessionId = await getVotingSessionId();
 
-    contractInstance.events.WorkflowStatusChange().on('data', (event) => {
+    /**
+     * Subscribing to all events as, subscribing each event separately throws each one multiple times
+     * https://github.com/ChainSafe/web3.js/issues/4010
+     */
+    contractInstance.events.allEvents(
+        {},
+        (err, event) => {
+            if (err) {
+                return console.warn(err);
+            }
+            triggerEvent(event)
+        }
+    );
+
+    subscribeEvent('WorkflowStatusChange', (event) => {
         contractStore.setState({ workflowStatus: event.returnValues.newStatus, votingSessionId: event.returnValues.votingSessionId });
         switch (event.returnValues.newStatus) {
             case '0':
@@ -56,7 +70,7 @@ async function loadContract(web3Provider) {
         }
     });
 
-    contractInstance.events.VoterRegistered().on('data', (event) => {
+    subscribeEvent('VoterRegistered', (event) => {
         if (Web3.utils.toChecksumAddress(event.returnValues.voterAddress) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             walletStore.setState({ isVoter: true });
             contractStore.getState().addLog('You have been registered as a voter');
@@ -70,7 +84,7 @@ async function loadContract(web3Provider) {
         });
     });
 
-    contractInstance.events.ProposalRegistered().on('data', async (event) => {
+    subscribeEvent('ProposalRegistered', async (event) => {
         if (Web3.utils.toChecksumAddress(event.returnValues.voter) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             const proposal = await getProposal(event.returnValues.proposalId);
 
@@ -85,7 +99,7 @@ async function loadContract(web3Provider) {
         }
     });
 
-    contractInstance.events.Voted().on('data', (event) => {
+    subscribeEvent('Voted', (event) => {
         if (Web3.utils.toChecksumAddress(event.returnValues.voter) === Web3.utils.toChecksumAddress(walletStore.getState().address)) {
             walletStore.setState({ hasVoted: true, votedProposalId: event.returnValues.proposalId });
             contractStore.getState().addLog('Your vote has been saved');
@@ -322,6 +336,27 @@ async function getWinner() {
     const winner = await contractInstance.methods.getWinner().call();
 
     return {proposalId: winner.proposalId, description: winner.description, voteCount: winner.voteCount};
+}
+
+const subscriptions = {};
+function subscribeEvent(eventName, callback) {
+    if (subscriptions[eventName] === undefined) {
+        subscriptions[eventName] = [];
+    }
+    subscriptions[eventName].push(callback);
+}
+
+function triggerEvent(event) {
+    if (subscriptions[event.event] !== undefined) {
+        for (const evt of Object.values(subscriptions[event.event])) {
+            evt(event);
+        }
+    }
+    if (subscriptions['*'] !== undefined) {
+        for (const evt of Object.values(subscriptions['*'])) {
+            evt(event);
+        }
+    }
 }
 
 export {
