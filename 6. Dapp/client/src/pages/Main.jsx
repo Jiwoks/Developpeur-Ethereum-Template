@@ -62,10 +62,12 @@ function Main() {
     return (
         <>
             <div id="header">
-                <div>
-                    <VotingSessionId />
-                    <Writer data={log} />
-                </div>
+                {allowedAccess &&
+                    <div>
+                        <VotingSessionId/>
+                        <Writer data={log}/>
+                    </div>
+                }
                 <div className="side-right">
                     <Wallet />
                 </div>
